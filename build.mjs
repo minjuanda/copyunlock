@@ -26,3 +26,5 @@ await cp("manifest.json", "dist/manifest.json");
 await cp("popup.html", "dist/popup.html");
 await cp("popup.css", "dist/popup.css");
 await cp("README.md", "dist/README.md");
+await cp("THIRD_PARTY_LICENSES.md", "dist/THIRD_PARTY_LICENSES.md");
+await cp("LICENSE", "dist/LICENSE");
