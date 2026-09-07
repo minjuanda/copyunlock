@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CopyUnlock</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main class="app">
+    <header>
+      <div>
+        <div class="eyebrow">COPYUNLOCK</div>
+        <h1>Extract visible text</h1>
+      </div>
+      <span id="status" class="status">Ready</span>
+    </header>
+
+    <section class="card">
+      <div class="actions">
+        <button id="analyze">Analyze page</button>
+        <button id="extract" class="primary">Extract text</button>
+        <button id="cancel" class="danger" hidden>Cancel</button>
+      </div>
+      <div id="capability" class="muted">No page analyzed yet.</div>
+      <div class="progress" aria-label="progress"><span id="progressBar"></span></div>
+      <div id="progressText" class="muted">Idle</div>
+    </section>
+
+    <section id="result" class="card" hidden>
+      <div class="result-meta">
+        <strong id="method">DOM</strong>
+        <span id="confidence"></span>
+        <span id="wordCount"></span>
+      </div>
+      <div class="tabs">
+        <button data-tab="text" class="tab active">Text</button>
+        <button data-tab="markdown" class="tab">Markdown</button>
+      </div>
+      <textarea id="output" spellcheck="false"></textarea>
+      <div class="actions">
+        <button id="copy">Copy</button>
+        <button id="exportTxt">TXT</button>
+        <button id="exportMd">Markdown</button>
+      </div>
+    </section>
+
+    <section id="error" class="card error" hidden>
+      <strong id="errorTitle">Something went wrong</strong>
+      <p id="errorMessage"></p>
+      <div class="actions">
+        <button id="retry">Retry</button>
+        <button id="domOnly">DOM only</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Settings</h2>
+      <label><input type="checkbox" id="autoUnlock"> Auto-unlock client-side copy restrictions</label>
+      <label><input type="checkbox" id="ocrEnabled"> Enable local OCR fallback</label>
+      <label>OCR language
+        <select id="ocrLanguage">
+          <option value="eng">English</option>
+          <option value="ind">Indonesia</option>
+          <option value="eng+ind">English + Indonesia</option>
+        </select>
+      </label>
+      <label><input type="checkbox" id="saveHistory"> Save extraction history locally</label>
+      <label>Theme
+        <select id="theme">
+          <option value="system">System</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </label>
+    </section>
+
+    <section class="privacy">
+      <strong>Privacy</strong>
+      <span>Page text and OCR images stay local. No cloud upload is used by this extension.</span>
+    </section>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>

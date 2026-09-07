@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  check:
+    name: Unit tests + build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+
+  browser:
+    name: Real-browser extension tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Playwright smoke
+        run: npm run test:e2e
+      - name: Real-browser RC suite (Chromium; Edge test is skipped when unavailable)
+        run: npx playwright test --config=playwright.rc.config.ts

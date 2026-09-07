@@ -1,0 +1,21 @@
+{
+  "name": "copyunlock",
+  "version": "0.9.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "check": "npm run test && npm run build"
+  },
+  "dependencies": {
+    "tesseract.js": "^6.0.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "esbuild": "^0.25.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  }
+}

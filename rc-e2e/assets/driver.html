@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CopyUnlock E2E driver</title>
+<style>
+  body{font:12px ui-monospace,monospace;padding:12px;background:#f4f4f2;color:#222}
+  h3{margin:0 0 8px} label{display:block;margin:4px 0}
+  input[type=text]{width:88%}
+  pre{white-space:pre-wrap;background:#141414;color:#7dff8a;padding:8px;min-height:40px;border-radius:6px}
+  .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+</style>
+</head>
+<body>
+  <h3>CopyUnlock E2E driver</h3>
+  <label>Fixture URL <input type="text" id="url"></label>
+  <div class="row">
+    <label><input type="checkbox" id="unlock" checked> UNLOCK first</label>
+    <label><input type="checkbox" id="ocr"> OCR enabled</label>
+    <label><input type="checkbox" id="relock"> RELOCK after</label>
+    <label>lang <select id="lang"><option value="eng">eng</option><option value="ind">ind</option><option value="eng+ind">eng+ind</option></select></label>
+    <label>auto-cancel(ms) <input type="text" id="autoCancel" style="width:70px" value=""></label>
+  </div>
+  <button id="run">Run analyze + extract</button>
+  <pre id="report">idle</pre>
+  <script src="driver.js"></script>
+</body>
+</html>

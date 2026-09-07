@@ -1,0 +1,22 @@
+# Dependencies & artifacts
+node_modules/
+dist/
+coverage/
+*.log
+
+# Playwright output
+test-results/
+playwright-report/
+.e2e-ext/
+.e2e-profile*/
+.e2e-edge-profile*/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.*

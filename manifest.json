@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "CopyUnlock",
+  "version": "0.9.1",
+  "description": "Local-first visible webpage text extraction with reversible client-side copy unlock and optional local OCR.",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "action": {
+    "default_title": "CopyUnlock",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
