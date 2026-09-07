@@ -1,0 +1,8 @@
+# Normalisasi akhir baris untuk semua teks menjadi LF di repo
+* text=auto eol=lf
+
+# Biner
+*.png binary
+*.jpg binary
+*.gif binary
+*.zip binary
