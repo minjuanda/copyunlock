@@ -63,13 +63,20 @@ async function findBundledChromium(): Promise<string | undefined> {
 async function launch(extKey: string) {
   const exe = await findBundledChromium();
   console.log(`bundled chromium: ${exe || "(not found; defaulting to playwright registry)"}`);
-  for (const mode of ["headless", "headed"]) {
+  // CI/headless-shell Chromium cannot host extensions, so try "new headless"
+  // (full browser, --headless=new) first, then plain headless, then headed.
+  const modes = [
+    { name: "new-headless", headless: false, extra: ["--headless=new"] },
+    { name: "headless", headless: true, extra: [] as string[] },
+    { name: "headed", headless: false, extra: [] as string[] },
+  ];
+  for (const mode of modes) {
     try {
       rmSync(PROFILE, { recursive: true, force: true });
       mkdirSync(PROFILE, { recursive: true });
       const c = await chromium.launchPersistentContext(PROFILE, {
         ...(exe ? { executablePath: exe } : {}),
-        headless: mode === "headless",
+        headless: mode.headless,
         viewport: { width: 1000, height: 700 },
         ignoreDefaultArgs: ["--disable-extensions", "--disable-component-extensions-with-background-pages"],
         args: [
@@ -77,6 +84,7 @@ async function launch(extKey: string) {
           `--load-extension=${EXT_DIR}`,
           "--no-first-run",
           "--no-default-browser-check",
+          ...mode.extra,
         ],
       });
       const probe = await c.newPage();
@@ -86,20 +94,20 @@ async function launch(extKey: string) {
         await probe.waitForLoadState("domcontentloaded");
         ok = !!resp && !(resp.status() >= 400) && (await probe.locator("h1").count()) > 0;
       } catch (e) {
-        console.log(`probe(${mode}) error: ${String(e).slice(0, 300)}`);
+        console.log(`probe(${mode.name}) error: ${String(e).slice(0, 300)}`);
       }
       await probe.close().catch(() => {});
       if (ok) {
-        launchMode = mode;
+        launchMode = mode.name;
         ctx = c;
         return;
       }
       await c.close();
     } catch (e) {
-      console.log(`launch(${mode}) failed: ${String(e).slice(0, 500)}`);
+      console.log(`launch(${mode.name}) failed: ${String(e).slice(0, 500)}`);
     }
   }
-  throw new Error("Could not launch Chrome with the unpacked extension (tried headless + headed).");
+  throw new Error("Could not launch Chrome with the unpacked extension (tried new-headless, headless, headed).");
 }
 
 function prepareExtensionDir(extKey: string) {
@@ -461,13 +469,18 @@ test("T8 Microsoft Edge load + static extraction (informative)", async () => {
   let verdict = "edge launch failed";
   let edgeCtx: BrowserContext | null = null;
   try {
-    for (const mode of ["headless", "headed"]) {
+    const edgeModes = [
+      { name: "new-headless", headless: false, extra: ["--headless=new"] },
+      { name: "headless", headless: true, extra: [] as string[] },
+      { name: "headed", headless: false, extra: [] as string[] },
+    ];
+    for (const mode of edgeModes) {
       try {
         rmSync(edgeProfile, { recursive: true, force: true });
         mkdirSync(edgeProfile, { recursive: true });
         const c = await chromium.launchPersistentContext(edgeProfile, {
           channel: "msedge",
-          headless: mode === "headless",
+          headless: mode.headless,
           viewport: { width: 1000, height: 700 },
           ignoreDefaultArgs: ["--disable-extensions", "--disable-component-extensions-with-background-pages"],
           args: [
@@ -475,6 +488,7 @@ test("T8 Microsoft Edge load + static extraction (informative)", async () => {
             `--load-extension=${EXT_DIR}`,
             "--no-first-run",
             "--no-default-browser-check",
+            ...mode.extra,
           ],
         });
         const probe = await c.newPage();
