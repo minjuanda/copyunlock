@@ -25,13 +25,19 @@ Alur: `Analyze → Unlock → Extract → OCR fallback (optional) → Progress �
 
 ## Cara pasang (Load unpacked)
 
-1. `npm install`
-2. `npm run check` → hasil build di folder `dist/`
-3. Buka `chrome://extensions` (Edge: `edge://extensions`)
-4. Aktifkan **Developer mode** → **Load unpacked** → pilih folder `dist/`
-5. Sematkan (pin) ikon CopyUnlock, lalu muat ulang halaman web yang terbuka
+### Tanpa Node.js (untuk pengguna) — paling gampang
+1. Unduh **`CopyUnlock_v0_9_1_Extension.zip`** dari halaman [Releases](https://github.com/minjuanda/copyunlock/releases).
+2. Ekstrak ZIP (muncul folder `CopyUnlock_v0_9_1_Extension`).
+3. Buka `chrome://extensions` (Edge: `edge://extensions`).
+4. Aktifkan **Developer mode** → **Load unpacked** → pilih folder `CopyUnlock_v0_9_1_Extension`.
+5. Sematkan (pin) ikon CopyUnlock, lalu muat ulang halaman web yang terbuka.
 
-Pengguna tanpa Node.js bisa memuat paket rilis (sudah berisi `dist/`) dari rilis GitHub.
+### Dari source (untuk pengembang)
+```bash
+npm install
+npm run check        # hasil build di dist/
+```
+Lalu Load unpacked folder `dist/` (langkah 3–5 di atas).
 
 ## Pengembangan
 
