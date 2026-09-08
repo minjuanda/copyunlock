@@ -1,5 +1,9 @@
 # CopyUnlock
 
+<p align="center">
+  <img src="icons/icon128.png" alt="CopyUnlock logo" width="128" height="128">
+</p>
+
 [![CI](https://github.com/REPLACE_WITH_YOUR_USER/copyunlock-github/actions/workflows/ci.yml/badge.svg)](https://github.com/REPLACE_WITH_YOUR_USER/copyunlock-github/actions/workflows/ci.yml)
 
 **Local-first browser extension** (Chrome / Edge, Manifest V3) untuk mengekstrak teks halaman web
